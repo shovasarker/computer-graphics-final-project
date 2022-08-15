@@ -79,22 +79,42 @@ void cloud(int value) {
 	//glutPostRedisplay();
 	glutTimerFunc(100, cloud, 0);
 }
+GLfloat positionCloud2 = -0.5f;
+GLfloat speedCloud2 = 0.008f;
+void cloud2(int value) {
+    if(positionCloud2 > 1.0)
+        positionCloud2 =-1.0f;
+    positionCloud2 += speedCloud2;
+	//glutPostRedisplay();
+	glutTimerFunc(100, cloud2, 0);
+}
+
+GLfloat positionCloud3 = -0.8f;
+GLfloat speedCloud3 = 0.003f;
+void cloud3(int value) {
+    if(positionCloud3 > 1.0)
+        positionCloud3 =-1.0f;
+    positionCloud3 += speedCloud3;
+	//glutPostRedisplay();
+	glutTimerFunc(100, cloud3, 0);
+}
 GLfloat position1 = 1.0f;
 GLfloat speed1 =-0.005f;
 void boat(int value)
 {
-   if(position1 <= -1.0)
+   if(position1 < -1.0)
         position1 = 1.0f;
+   if(position1 > 1.0)
+        position1 = -1.0f;
 
     position1 += speed1;
 
 	glutPostRedisplay();
 	glutTimerFunc(100, boat, 0);
 }
-void cloud1()
+void cloud1(int r, int g, int b)
 {
     GLfloat radius =.05f;
-    int r=255, g=217, b=255;
     drawCircle(0.5f,0.86f, radius, r, g, b);
     drawCircle(0.55f,0.83f, radius, r, g, b);
     drawCircle(0.45f,0.83f, radius, r, g, b);
@@ -103,50 +123,18 @@ void cloud1()
 
 }
 
-void cloud2()
-{
-    GLfloat radius =.05f;
-    int r=255, g=217, b=255;
-    drawCircle(-0.5f,0.86f, radius, r, g, b);
-    drawCircle(-0.55f,0.83f, radius, r, g, b);
-    drawCircle(-0.45f,0.83f, radius, r, g, b);
-    drawCircle(-0.52f,0.8f, radius, r, g, b);
-    drawCircle(-0.6f,0.82f, radius, r, g, b);
-}
-
-void cloud3()
-{
-    GLfloat radius =.05f;
-    int r=255, g=217, b=255;
-    drawCircle(0.0f,0.86f, radius, r, g, b);
-    drawCircle(0.05f,0.83f, radius, r, g, b);
-    drawCircle(-0.05f,0.83f, radius, r, g, b);
-    drawCircle(0.02f,0.8f, radius, r, g, b);
-    drawCircle(0.1f,0.82f, radius, r, g, b);
-
-}
-void sky()
+void sky(int r, int g, int b)
 {
     glBegin(GL_QUADS);
-    glColor3ub(51, 204, 255);
+    glColor3ub(r, g, b);
 	glVertex2f(-1.0f, 0.45f);
 	glVertex2f(1.0f, 0.45f);
     glVertex2f(1.0f, 1.0f);
 	glVertex2f(-1.0f, 1.0f);
     glEnd();
 }
-void sky2()
-{
-    glBegin(GL_QUADS);
-    glColor3ub(0, 51, 204);
-	glVertex2f(-1.0f, 0.45f);
-	glVertex2f(1.0f, 0.45f);
-    glVertex2f(1.0f, 1.0f);
-	glVertex2f(-1.0f, 1.0f);
-    glEnd();
-}
-void backgroundtree()
-{
+
+void backgroundtree(){
     //pamtrees
     glBegin(GL_POLYGON);
 	glColor3ub(102, 51, 0);
@@ -275,24 +263,40 @@ void backgroundtree()
 	glEnd();
 
 }
-void bird()
-{
-       int i;
 
-	GLfloat mm=0.182f; GLfloat nn=.801f; GLfloat radiusmm =.01f;
-	int triangleAmount = 20;
-	GLfloat twicePi = 2.0f * PI;
 
-	glBegin(GL_TRIANGLE_FAN);
-	    glColor3ub(0, 0, 24);
-		glVertex2f(mm, nn); // center of circle
-		for(i = 0; i <= triangleAmount;i++) {
-			glVertex2f(
-		            mm + (radiusmm * cos(i *  twicePi / triangleAmount)),
-			    nn + (radiusmm * sin(i * twicePi / triangleAmount))
-			);
-		}
-	glEnd();
+  void whiteBird(){
+    glBegin(GL_POLYGON);
+    glColor3ub(225, 225, 208 );
+    glVertex2f(-0.72f,0.8f);
+    glVertex2f(-0.71f,0.79f);
+    glVertex2f(-0.7f,0.78f);
+    glVertex2f(-0.66f,0.77f);
+    glVertex2f(-0.63f,0.79f);
+    glVertex2f(-0.619f,0.8f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);
+    glColor3ub(217, 217, 217);
+    glVertex2f(-0.645f,0.8f);
+    glVertex2f(-0.67f,0.8f);
+    glVertex2f(-0.68f,0.84f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);
+    glColor3ub(242, 242, 242 );
+    glVertex2f(-0.645f,0.8f);
+    glVertex2f(-0.676f,0.8f);
+    glVertex2f(-0.7f,0.83f);
+    glEnd();
+    GLfloat radius =.01f;
+    drawCircle(-0.638f, .801f, radius, 225, 225, 208);
+}
+
+void blackBird(){
+     GLfloat radius =.01f;
+    drawCircle(0.182f, .801f, radius, 0, 0, 24);
+
     glBegin(GL_POLYGON);
     glColor3ub(25, 25, 40 );
     glVertex2f(0.1f,0.8f);
@@ -317,121 +321,36 @@ void bird()
     glVertex2f(0.144f,0.8f);
     glVertex2f(0.12f,0.83f);
     glEnd();
+}
+void bird(){
+    whiteBird();
+    glPushMatrix();
+    glTranslatef(-0.25f, 0.0f, 0.0f);
+    whiteBird();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-0.15f, 0.1f, 0.0f);
+    whiteBird();
+    glPopMatrix();
 
+    blackBird();
+    glPushMatrix();
+    glTranslatef(-0.15f, -0.1f, 0.0f);
+    blackBird();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-0.3f, -0.1f, 0.0f);
+    blackBird();
+    glPopMatrix();
 
-	/////2nd bird////
-	glBegin(GL_POLYGON);
-    glColor3ub(25, 25, 48 );
-    glVertex2f(-0.02f,0.8f);
-    glVertex2f(-0.01f,0.79f);
-    glVertex2f(0.0f,0.78f);
-    glVertex2f(0.04f,0.77f);
-    glVertex2f(0.07f,0.79f);
-    glVertex2f(0.081f,0.8f);
-    glEnd();
-
-    glBegin(GL_TRIANGLES);
-    glColor3ub(40, 40, 40);
-    glVertex2f(0.055f,0.8f);
-    glVertex2f(0.03f,0.8f);
-    glVertex2f(0.02f,0.84f);
-    glEnd();
-
-
-    glBegin(GL_TRIANGLES);
-    glColor3ub(10, 10, 10 );
-    glVertex2f(0.055f,0.8f);
-    glVertex2f(0.024f,0.8f);
-    glVertex2f(0.0f,0.83f);
-    glEnd();
-
-	GLfloat mmm=0.062f; GLfloat nnn=.801f; GLfloat radiusmmm =.01f;
-
-	glBegin(GL_TRIANGLE_FAN);
-	    glColor3ub(25, 25, 48);
-		glVertex2f(mmm, nnn); // center of circle
-		for(i = 0; i <= triangleAmount;i++) {
-			glVertex2f(
-		            mmm + (radiusmmm * cos(i *  twicePi / triangleAmount)),
-			    nnn + (radiusmmm * sin(i * twicePi / triangleAmount))
-			);
-		}
-	glEnd();
-	/////3rd bird/////
-	glBegin(GL_POLYGON);
-    glColor3ub(225, 225, 208 );
-    glVertex2f(-0.72f,0.8f);
-    glVertex2f(-0.71f,0.79f);
-    glVertex2f(-0.7f,0.78f);
-    glVertex2f(-0.66f,0.77f);
-    glVertex2f(-0.63f,0.79f);
-    glVertex2f(-0.619f,0.8f);
-    glEnd();
-
-    glBegin(GL_TRIANGLES);
-    glColor3ub(217, 217, 217);
-    glVertex2f(-0.645f,0.8f);
-    glVertex2f(-0.67f,0.8f);
-    glVertex2f(-0.68f,0.84f);
-    glEnd();
-
-    glBegin(GL_TRIANGLES);
-    glColor3ub(242, 242, 242 );
-    glVertex2f(-0.645f,0.8f);
-    glVertex2f(-0.676f,0.8f);
-    glVertex2f(-0.7f,0.83f);
-    glEnd();
-
-	GLfloat mmmm=-0.638f; GLfloat nnnn=.801f;
-
-	glBegin(GL_TRIANGLE_FAN);
-	    glColor3ub(225, 225, 208);
-		glVertex2f(mmmm,nnnn); // center of circle
-		for(i = 0; i <= triangleAmount;i++) {
-			glVertex2f(
-		            mmmm + (radiusmmm * cos(i *  twicePi / triangleAmount)),
-			    nnnn + (radiusmmm * sin(i * twicePi / triangleAmount))
-			);
-		}
-	glEnd();
-	////4th bird////
-	GLfloat mmmmm=-0.518f; GLfloat nnnnn=.801f;
-
-	glBegin(GL_TRIANGLE_FAN);
-	    glColor3ub(225, 225, 208);
-		glVertex2f(mmmmm, nnnnn); // center of circle
-		for(i = 0; i <= triangleAmount;i++) {
-			glVertex2f(
-		            mmmmm + (radiusmm * cos(i *  twicePi / triangleAmount)),
-			    nnnnn + (radiusmm * sin(i * twicePi / triangleAmount))
-			);
-		}
-	glEnd();
-    glBegin(GL_POLYGON);
-    glColor3ub(225, 225, 208 );
-    glVertex2f(-0.6f,0.8f);
-    glVertex2f(-0.59f,0.79f);
-    glVertex2f(-0.58f,0.78f);
-    glVertex2f(-0.54f,0.77f);
-    glVertex2f(-0.51f,0.79f);
-    glVertex2f(-0.499f,0.8f);
-    glEnd();
-
-    glBegin(GL_TRIANGLES);
-    glColor3ub(217, 217, 217);
-    glVertex2f(-0.525f,0.8f);
-    glVertex2f(-0.55f,0.8f);
-    glVertex2f(-0.56f,0.84f);
-    glEnd();
-
-
-    glBegin(GL_TRIANGLES);
-    glColor3ub(242, 242, 242 );
-    glVertex2f(-0.525f,0.8f);
-    glVertex2f(-0.556f,0.8f);
-    glVertex2f(-0.58f,0.83f);
-    glEnd();
-
+    glPushMatrix();
+    glTranslatef(-0.15f, 0.1f, 0.0f);
+    blackBird();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-0.3f, 0.1f, 0.0f);
+    blackBird();
+    glPopMatrix();
 
 }
 void stars()
@@ -482,15 +401,15 @@ void sun()
 void moon()
 {
     GLfloat radius =.06f;
-    drawCircle(-0.5f,0.93f,radius,0,51,204);
+    drawCircle(-0.5f,0.93f,radius,0,0,60);
     drawCircle(-0.5f,0.9f,radius,242, 242, 242);
 
 }
 
-void ground()
+void ground(int r, int g, int b)
 {
     glBegin(GL_POLYGON);
-	glColor3ub(102, 255, 51);
+	glColor3ub(r,g,b);
 	glVertex2f(-1.0f,-1.0f);
 	glVertex2f(-1.0f,0.0f);
 	glVertex2f(0.0f, 0.0f);
@@ -573,10 +492,10 @@ void ground()
     glVertex2f(0.25f, -0.948);
     glEnd();
 }
-void river()
+void river(int r, int g, int b)
 {
    glBegin(GL_QUADS);
-   glColor3ub(38, 154, 214);
+   glColor3ub(r,g,b);
 	//glColor3ub(0,122,204);
 	glVertex2f(-1.0f,0.45f);
 	glVertex2f(1.0f,0.45f);
@@ -903,17 +822,17 @@ void hut1()
 
 void tree()
 {
-//    glBegin(GL_POLYGON);
-//    glColor3ub(102, 51, 0);
-//    glVertex2f(-0.72f,-0.15f);
-//    glVertex2f(-0.65f,-0.2f);
-//    glVertex2f(-0.735f,-0.17f);
-//    glVertex2f(-0.74f,-0.25f);
-//    glVertex2f(-0.775f,-0.17f);
-//    glVertex2f(-0.85f,-0.2f);
-//    glVertex2f(-0.78f,-0.15f);
-//    //glVertex2f(-0.7f,-0.25f);
-//    glEnd();
+    // Tree Root
+    glBegin(GL_POLYGON);
+    glColor3ub(102, 51, 0);
+    glVertex2f(-0.72f,-0.15f);
+    glVertex2f(-0.65f,-0.2f);
+    glVertex2f(-0.735f,-0.17f);
+    glVertex2f(-0.74f,-0.25f);
+    glVertex2f(-0.775f,-0.17f);
+    glVertex2f(-0.85f,-0.2f);
+    glVertex2f(-0.78f,-0.15f);
+    glEnd();
 
     glBegin(GL_QUADS);
     glColor3ub(102, 51, 0);
@@ -1189,10 +1108,9 @@ void boat4()
 	glVertex2f(0.51f, -0.13f);
 	glEnd();
 }
-void Straw()
-{
+void Straw(int r, int g, int b){
     glBegin(GL_POLYGON);
-	glColor3ub(255, 219, 77);
+	glColor3ub(r, g, b);
 	glVertex2f(-0.2f, -0.1f);
 	glVertex2f(0.1f, -0.1f);
 	glVertex2f(0.1f, 0.1f);
@@ -1210,8 +1128,7 @@ void Straw()
 	glVertex2f(-0.05f, 0.31f);
     glEnd();
 }
-void way()
-{
+void way(){
     glBegin(GL_QUADS);
     glColor3ub(153, 153, 102);
     glVertex2f(-0.35f,-0.2f);
@@ -1258,8 +1175,7 @@ void grassFlowers1(){
     drawCircle(0.05f, -0.35f, radius, 255, 102, 0);
     drawCircle(0.0f, -0.3f, radius, 255, 255, 0);
 }
-void grass1()
-{
+void grass1(){
      grassLines1();
      grassFlowers1();
 
@@ -1291,8 +1207,7 @@ void grassFlowers2(){
     drawCircle(0.05f, -0.65f, radius, 255, 51, 0);
     drawCircle(0.0f, -0.6f, radius, 255, 102, 0);
 }
-void grass2()
-{
+void grass2(){
     grassLines2();
     grassFlowers2();
 }
@@ -1323,17 +1238,29 @@ void grassFlowers3() {
     drawCircle(-0.75f, -0.75f, radius, 255, 255, 0);
     drawCircle(-0.8f, -0.7f, radius, 255, 102, 0);
 }
-void grass3()
-{
+void grass3(){
     grassLines3();
     grassFlowers3();
 
 }
 
-void fence()
-{
-     glLineWidth(4);
-     glBegin(GL_LINES);
+void grass4(){
+    grassFlowers1();
+    grassLines1();
+}
+void grass5(){
+    grassFlowers2();
+    grassLines2();
+}
+void grass6(){
+    grassFlowers3();
+    grassLines3();
+
+}
+
+void fence(){
+    glLineWidth(4);
+    glBegin(GL_LINES);
     glColor3ub(255, 255, 102);
     glVertex2f(-1.0f,-0.1f);
     glVertex2f(-0.6f,-0.1f);
@@ -1384,27 +1311,10 @@ void fence()
 
     glEnd();
 }
-void grass4()
-{
-    grassFlowers1();
-    grassLines1();
-}
-void grass5()
-{
-    grassFlowers2();
-    grassLines2();
-}
-void grass6()
-{
-    grassFlowers3();
-    grassLines3();
 
-}
+void well(){
 
-void well()
-{
-
-glBegin(GL_POLYGON);
+    glBegin(GL_POLYGON);
     glColor3ub(204, 51, 0);
     glVertex2f(-0.9f,-0.35f);
     glVertex2f(-0.9f,-0.55f);
@@ -1494,8 +1404,7 @@ glBegin(GL_POLYGON);
     glEnd();
 }
 
-void well1()
-{
+void well1(){
 
      glLineWidth(5);
      glBegin(GL_LINES);
@@ -1585,8 +1494,7 @@ void well1()
     glVertex2f(-0.57f,-0.42f);
     glEnd();
 }
-void StartingText()
-{
+void StartingText(){
     char text[120];
     sprintf(text, "BEAUTY OF NATURE  BEAUTIFUL VILLAGE SCENARIO",5.00,8.00);
     glColor3f(0, 0, 0);
@@ -1610,8 +1518,7 @@ void StartingText()
 
 }
 
-void DrawSphere()
-{
+void DrawSphere(){
     glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
     glEnable ( GL_COLOR_MATERIAL ) ;
     glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
@@ -1620,10 +1527,13 @@ void DrawSphere()
     glLoadIdentity();
     glPushMatrix();
     glTranslatef(position2,0.0f, 0.0f);
-    cloud3();
+    cloud1(255, 255, 255);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(positionCloud2,0.1f, 0.0f);
+    cloud1(225, 225, 225);
     glPopMatrix();
     moon();
-    //sun();
     boat4();
     boat3();
     hut1();
@@ -1635,21 +1545,20 @@ void DrawSphere()
     grass6();
     way();
     well1();
-    Straw();
-    ground();
-    river();
+    Straw(255, 219, 77);
+    ground(102, 255, 51);
+    river(38, 154, 214);
     glPushMatrix();
     glTranslatef(0.0f,position4, 0.0f);
     sun();
     glPopMatrix();
     stars();
-    sky2();
+    sky(0, 0, 60);
     glFlush();
 
 }
 
-void nightTime()
-{
+void nightTime(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_PROJECTION);
@@ -1668,6 +1577,27 @@ struct Point
 };
 std::vector< Point > points;
 
+void clouds (){
+
+    GLfloat x=0.4f;
+    for(int i=0; i<=10; i++){
+        glPushMatrix();
+        glTranslatef(x, 0.01f, 0.0f);
+        cloud1(200, 200, 200);
+        glPopMatrix();
+        x-=0.2;
+    }
+    GLfloat x1=0.5f;
+    for(int i=0; i<=10; i++){
+        glPushMatrix();
+        glTranslatef(x1, 0.13f, 0.0f);
+        cloud1(200, 200, 200);
+        glPopMatrix();
+        x1-=0.2;
+    }
+
+}
+
 void rainyDay(void)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1675,13 +1605,11 @@ void rainyDay(void)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 	glLineWidth(2);
-    sky();
-    cloud1();
-    cloud2();
-    cloud3();
+    sky(100,100,100);
+    clouds();
     backgroundtree();
-    river();
-    ground();
+    river(100, 100, 120);
+    ground(102, 220, 51);
     grass1();
     grass2();
     grass3();
@@ -1690,7 +1618,7 @@ void rainyDay(void)
     fence();
     tree();
     well();
-    Straw();
+    Straw(220, 200, 77);
     hut();
     glOrtho(-50, 50, -50, 50, -1, 1);
     glMatrixMode(GL_MODELVIEW);
@@ -1718,24 +1646,31 @@ void dayTime() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glLineWidth(2);
-    sky();
+    sky(51, 204, 255);
     sun();
     glPushMatrix();
-    glTranslatef(position2,0.0f, 0.0f);
-    cloud1();
-    cloud2();
+    glTranslatef(position2,0.1f, 0.0f);
+    cloud1(200, 200, 200);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(positionCloud2,-0.1f, 0.0f);
+    cloud1(255, 255, 255);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(positionCloud3,0.0f, 0.0f);
+    cloud1(225, 225, 225);
     glPopMatrix();
     glPushMatrix();
     glTranslatef(position22,0.0f, 0.0f);
     bird();
     glPopMatrix();
     backgroundtree();
-    river();
+    river(38, 154, 214);
     glPushMatrix();
     glTranslatef(position1,0.0f, 0.0f);
     boat();
     glPopMatrix();
-    ground();
+    ground(102, 255, 51);
     grass1();
     grass2();
     grass3();
@@ -1744,13 +1679,13 @@ void dayTime() {
     fence();
     tree();
     well();
-    Straw();
+    Straw(255, 219, 77);
     hut();
 	glFlush();
 	glutSwapBuffers();
 }
-void reshape(int w, int h)
-{
+
+void reshape(int w, int h){
 //    std::cout<<"Reshape is called"<<std::endl;
     float aspectRatio = (float)w/(float)h;
     glMatrixMode(GL_PROJECTION);
@@ -1809,7 +1744,12 @@ void handleKeypress(unsigned char key, int x, int y) {
         glutDisplayFunc(nightTime);
         glutPostRedisplay();
     }
-
+    else if(key == 'w' || key == 'W'){
+        speed1 -= 0.005;
+    }
+    else if(key == 's' || key == 'S'){
+        speed1 += 0.005;
+    }
 }
 
 void generateRainDrops()
@@ -1840,6 +1780,8 @@ int main(int argc, char** argv)
     generateRainDrops();
 
     glutTimerFunc(100, cloud, 0);
+    glutTimerFunc(100, cloud2, 0);
+    glutTimerFunc(100, cloud3, 0);
     glutTimerFunc(100, sunn, 0);
     glutTimerFunc(100, boat, 0);
     glutTimerFunc(100, rain, 0);
